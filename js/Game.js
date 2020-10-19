@@ -96,12 +96,14 @@
 
  resetGame() {
  	// delete game;
- 	this.missed = 0;
-	this.activePhrase = this.getRandomPhrase();
-	this.currentPhrase = [];
-	phrase.letterGuesses = [];
-	this.win = false;
-	this.lives = 5;
+ // 	this.missed = 0;
+	// this.activePhrase = this.getRandomPhrase();
+	// this.currentPhrase = [];
+	// phrase.letterGuesses = [];
+	// this.win = false;
+	// this.lives = 5;
+	this.phrase = '';
+	console.log(`Phrase: ${this.phrase}`);
  }
 
  	replaceContent() {

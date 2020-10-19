@@ -11,7 +11,9 @@ let game;
  	}
  	if (game.reset === true) {
  	$('#phrase').children().remove();
- 	game.resetGame();	
+ 	game.resetGame();
+ 	game = '';	
+ 	game = new Game();
  	}
  	game.startGame();
  	game.replaceContent();
