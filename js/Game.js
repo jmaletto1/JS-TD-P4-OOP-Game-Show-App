@@ -11,7 +11,7 @@
  		this.letterGuesses = [];
  		this.win = false;
  		this.phrase;
- 		this.reset = false;
+ 		// this.reset = false;
  	}
 
  	createPhrases() {
