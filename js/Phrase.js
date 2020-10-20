@@ -8,6 +8,7 @@
  		// this.currentPhrase = [];
  		this.letterGuesses = [];
  		this.letterguess;
+ 		this.regexText;
 
 }
 
@@ -33,11 +34,9 @@ $('#phrase').append(`    </ul>
 
 checkLetter(e) {
 		this.letterGuess = e;
-		let regexText = /[A-Za-z]/.test(this.letterGuess);
-		if (regexText) {
-			// console.log(letterGuess);
+		this.regexText = /[A-Za-z]/.test(this.letterGuess);
+		if (this.regexText) {
 	 		let thisPhrase = game.activePhrase.toString();
-			// console.log(letterGuess);
 
 			//Append letters to Letter CheckArray
 			if (this.letterGuesses.includes(this.letterGuess)) {
