@@ -33,32 +33,38 @@ $('#phrase').append(`    </ul>
 
 checkLetter(e) {
 		this.letterGuess = e;
-		// console.log(letterGuess);
- 		let thisPhrase = game.activePhrase.toString();
-		// console.log(letterGuess);
+		let regexText = /[A-Za-z]/.test(this.letterGuess);
+		if (regexText) {
+			// console.log(letterGuess);
+	 		let thisPhrase = game.activePhrase.toString();
+			// console.log(letterGuess);
 
-		//Append letters to Letter CheckArray
-		if (this.letterGuesses.includes(this.letterGuess)) {
-			alert("You've already used that letter!")
-		} else {
-		this.letterGuesses.push(this.letterGuess);
-		// console.log(this.letterGuesses);
-		}
-
-		if (game.currentPhrase.includes(this.letterGuess)) {
-		$(`.key[value="${this.letterGuess}"]`).addClass("chosen").prop('disabled', true);
-		for (let letter=0; letter<game.currentPhrase.length; letter++) {
-			if (game.currentPhrase[letter] === this.letterGuess) {
-				game.currentPhrase.splice(letter, 1); letter--;
-				this.showMatchedLetter();
+			//Append letters to Letter CheckArray
+			if (this.letterGuesses.includes(this.letterGuess)) {
+				alert("You've already used that letter!")
+			} else {
+			this.letterGuesses.push(this.letterGuess);
+			// console.log(this.letterGuesses);
 			}
-		}
+
+			if (game.currentPhrase.includes(this.letterGuess)) {
+			$(`.key[value="${this.letterGuess}"]`).addClass("chosen").prop('disabled', true);
+			for (let letter=0; letter<game.currentPhrase.length; letter++) {
+				if (game.currentPhrase[letter] === this.letterGuess) {
+					game.currentPhrase.splice(letter, 1); letter--;
+					this.showMatchedLetter();
+				}
+			}
+			} else {
+				$(`.key[value="${this.letterGuess}"]`).addClass("wrong").prop('disabled', true);
+				// $('input[type="button"][value="My task"]')
+				game.removeLife();
+			}
 		} else {
-			$(`.key[value="${this.letterGuess}"]`).addClass("wrong").prop('disabled', true);
-			// $('input[type="button"][value="My task"]')
-			game.removeLife();
+			alert("Please only use letters!");
 		}
-}
+	}
+
 
 showMatchedLetter() {
  			$('li').parent().children(`.${this.letterGuess}`).removeClass('hide').addClass('show');
