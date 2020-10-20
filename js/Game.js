@@ -10,13 +10,12 @@
  		this.currentPhrase = [];
  		this.letterGuesses = [];
  		this.win = false;
- 		this.lives = 5;
  		this.phrase;
  		this.reset = false;
  	}
 
  	createPhrases() {
- 		const phrases = [
+ 		const thephrases = [
  		["one"],
  		["two"],
  		["four"]
@@ -26,13 +25,14 @@
  		// ["Or do lie in court"],
  		// ["Tickle the kitty"]
  		];
- 		return phrases;
+ 		return thephrases;
  	}
 
  	getRandomPhrase() {
- 	const phrasesLength = this.phrases.length;
-	let phraseIndex = Math.floor(Math.random() * phrasesLength);
+ 	// const phrasesLength = this.phrases.length;
+	let phraseIndex = Math.floor(Math.random() * this.phrases.length);
 	let randomPhrase = this.phrases[phraseIndex];
+	// alert(`Here is your phrase: ${randomPhrase}`);
 	return randomPhrase;
  	}
 
@@ -60,37 +60,40 @@
  	handleInteraction(e) {
  		this.phrase.checkLetter(e);
  		this.checkforWin();
- 		this.gameOver();
 	}
 
 	checkforWin() {
-		if (this.currentPhrase.length === 0 && this.lives > 0) {
+		if (this.currentPhrase.length === 0 && this.missed < 5) {
 			this.win = true;
-			console.log(phrase.letterGuesses);
-			$('#overlay').show().css("background-color", "green");
-			$('#game-over-message').text("You Win! Do a little dance.")
-			$('#btn__reset').text("Play Again");
+			this.gameOver(true);
+			}	else if (this.currentPhrase.length > 0 && this.missed === 5) {
+					this.win = false;
+					this.gameOver(false);
+				}
+			}
 			// this.resetGame();
-		return true;
-		} else {
-			return false;
-		}
-	} 
 
 	removeLife() {
-		this.lives -= 1;
+		this.missed += 1;
 			// alert("That's incorrect! You lost a life");
 			// alert(`You now have ${game.lives} remaining.`)
 			console.log(game.currentPhrase);
 			$('.tries:first-child').remove();
 
 	}
-	gameOver(e) {
-		if (this.lives === 0) {
+	gameOver(result) {
+		if (result) {
+			$('#overlay').show().css("background-color", "green");
+			$('#game-over-message').text("You Win! Do a little dance.")
+			$('#btn__reset').text("Play Again");
+			this.resetGame();
+			this.replaceContent();
+		} else {
 			$('#overlay').show().css("background-color", "red");
 			$('#game-over-message').text("You Lose! Hahaha!");
 			$('#btn__reset').text("Play Again");
-			// this.resetGame();
+			this.resetGame();
+			this.replaceContent();
 	}
  }
 
@@ -101,9 +104,9 @@
 	// this.currentPhrase = [];
 	// phrase.letterGuesses = [];
 	// this.win = false;
-	// this.lives = 5;
-	this.phrase = '';
+	// this.phrase = '';
 	console.log(`Phrase: ${this.phrase}`);
+	$('#phrase').children().remove();
  }
 
  	replaceContent() {
@@ -120,7 +123,6 @@
 					<button class="key" value="o">o</button>
 					<button class="key" value="p">p</button>
 				</div>
-
 				<div class="keyrow">
 					<button class="key" value="a">a</button>
 					<button class="key" value="s">s</button>
@@ -132,7 +134,6 @@
 					<button class="key" value="k">k</button>
 					<button class="key" value="l">l</button>
 				</div>
-
 				<div class="keyrow">
 					<button class="key" value="z">z</button>
 					<button class="key" value="x">x</button>
@@ -151,6 +152,6 @@
 	$('#scoreboard ol').append(
  		`<li class="tries"><img src="images/liveHeart.png" alt="Heart Icon" height="35" width="30"></li>`
  	);
- 	} this.reset = true;
- 	}
+} this.reset = true;
+ 	} 
 }

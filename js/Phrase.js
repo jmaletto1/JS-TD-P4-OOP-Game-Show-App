@@ -8,7 +8,6 @@
  		// this.currentPhrase = [];
  		this.letterGuesses = [];
  		this.letterguess;
- 		// this.win = false;
 
 }
 
@@ -52,8 +51,6 @@ checkLetter(e) {
 			if (game.currentPhrase[letter] === this.letterGuess) {
 				game.currentPhrase.splice(letter, 1); letter--;
 				this.showMatchedLetter();
-				//Unhide the relevant letters
- 			// $('li').parent().children(`.${letterGuess}`).removeClass('hide').addClass('show');
 			}
 		}
 		} else {
