@@ -20,9 +20,9 @@
  		// ["two"],
  		// ["four"]
  		["one more mile"],
- 		["buy low sell high"],
- 		["do not lie in Court"],
- 		["or do lie in court"],
+ 		["avoid comment sections"],
+ 		["live laugh vomit"],
+ 		["think before you speak"],
  		["tickle the kitty"]
  		];
  		return thephrases;
