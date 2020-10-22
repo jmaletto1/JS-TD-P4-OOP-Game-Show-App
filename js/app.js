@@ -18,7 +18,7 @@ $('.key').each(function(i, obj) {
 
 /* Accept a value typed in by the user's keyboard, 
 and pass this to the handleInteraction() function.*/
- 	$('body').on('keyup', (e) => {
+ 	$('body').on('keydown', (e) => {
 	game.handleInteraction(e.key);
 });
 

@@ -28,6 +28,8 @@ body {
   flex-direction: column;
   display: flex;
   height: 100vh;
+  background-color: #ffe6ee;
+  background
 }
 
 li, ol, ul {
@@ -99,8 +101,9 @@ button {
   padding: 20px 1px 0 1px;
   margin-right: 2px;
   color: transparent;
-  background: var(--color-neutral-light);
-  border-radius: 5px;
+  /*background: var(--color-neutral-light);*/
+  background: #ffb3cc;
+  border-radius: 105px;
 }
 
 .space {
@@ -117,7 +120,7 @@ button {
   width: 65px;
   padding: 20px 1px 0 1px;
   margin-right: 2px;
-  border-radius: 5px;
+  border-radius: 105px;
   -webkit-animation-duration: .5s;
   animation-duration: .5s;
 }
@@ -132,13 +135,14 @@ button {
 
 .chosen {
   background: #64f79c;
-  border-radius: 5px;
+  border-radius: 50px;
   font-size: var(--font-size-medium);
   color: #FFFFFF;
 }
 
 .wrong {
   background: #f76e64;
+  border-radius: 50px;
   color: #FFFFFF;
 }
 
