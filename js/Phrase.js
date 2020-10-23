@@ -7,21 +7,16 @@
  	constructor(phrase) {
  		this.phrase = phrase;
  		this.letterGuesses = [];
- 		this.letterguess;
+ 		this.letterGuess;
  		this.regexText;
 }
 
-/* This method initially creates the div where the letter placeholders
-will appear. It then converts the phrase to a string, so that it can be
+/* This method converts the phrase to a string, so that it can be
 looped through and appended to the div, letter by letter.
 */
 
-addPhraseToDisplay(randomPhrase) {
-let phraseDiv = `<div id="phrase" class="section">
-    <ul>
-        `;
-$('#phrase').append(`<p>${phraseDiv}</p>`);
-let randomString = randomPhrase.toString();
+addPhraseToDisplay() {
+let randomString = this.phrase.toString();
 for (let i=0; i<randomString.length; i++) {
 	const result = /^[A-Za-z]+$/.test(randomString[i]);
 	if (result) {
@@ -48,10 +43,10 @@ further use.
 */
 
 checkLetter(e) {
-		this.letterGuess = e.toLowerCase();;
+		this.letterGuess = e.toLowerCase();
 		this.regexText = /[A-Za-z]/.test(this.letterGuess);
 		if (this.regexText) {
-	 		let thisPhrase = game.activePhrase.toString();
+	 		let thisPhrase = this.phrase.toString();
 
 			//Append letters to Letter CheckArray
 			if (this.letterGuesses.includes(this.letterGuess)) {
@@ -60,26 +55,20 @@ checkLetter(e) {
 			this.letterGuesses.push(this.letterGuess);
 			}
 
-			if (game.currentPhrase.includes(this.letterGuess)) {
-			$(`.key[value="${this.letterGuess}"]`).addClass("chosen").prop('disabled', true);
-			for (let letter=0; letter<game.currentPhrase.length; letter++) {
-				if (game.currentPhrase[letter] === this.letterGuess) {
-					game.currentPhrase.splice(letter, 1); letter--;
-					this.showMatchedLetter();
-				}
-			}
+			if (this.phrase.includes(this.letterGuess)) {
+				return true;
 			} else {
-				$(`.key[value="${this.letterGuess}"]`).addClass("wrong").prop('disabled', true);
-				game.removeLife();
+				return false;
 			}
 		} else {
 			alert("Please only use letters!");
+
 		}
 	}
 
 // This method removes the "hidden" class on the letter, making it visible.
-showMatchedLetter() {
- 			$('li').parent().children(`.${this.letterGuess}`).removeClass('hide').addClass('show');
+showMatchedLetter(e) {
+ 		$('li').parent().children(`.${this.letterGuess}`).removeClass('hide').addClass('show');
 
 	}
 }

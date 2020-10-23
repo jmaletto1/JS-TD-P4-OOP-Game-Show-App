@@ -8,22 +8,18 @@
  	constructor() {
  		this.missed = 0;
  		this.phrases = this.createPhrases();
- 		this.activePhrase = this.getRandomPhrase();
- 		this.currentPhrase = [];
- 		this.letterGuesses = [];
- 		this.win = false;
- 		this.phrase;
+ 		this.activePhrase = null;
  	}
 
 // Creates the 5 phrases, which are returned to this.phrases.
 
  	createPhrases() {
- 		const thephrases = [
- 		["one more mile"],
- 		["avoid comment sections"],
- 		["live laugh vomit"],
- 		["think before you speak"],
- 		["tickle the kitty"]
+ 		let thephrases = [
+ 		new Phrase("one more mile"),
+ 		new Phrase("avoid comment sections"),
+ 		new Phrase("live laugh vomit"),
+ 		new Phrase("think before you speak"),
+ 		new Phrase("tickle the kitty")
  		];
  		return thephrases;
  	}
@@ -36,36 +32,39 @@
  	}
 
 /* Starts the game when clicked upon. This initially hides the overlay,
-before creating a new phrase object. We then add the phrase to the display
-using the relevant function.
-
-Additionally - This function also removes the whitespace from the string,
-before looping through the letters, converting them to lowercase, and
-appending them to the this.currentPhrase array.
+before creating a new phrase object. We create the div that will store the game characters, 
+and then add the phrase to the display using the relevant function.
 */
 
  	startGame() {
  		$('#overlay').hide();
- 		this.phrase = new Phrase(this.activePhrase);
- 		this.phrase.addPhraseToDisplay(this.activePhrase);
-
- 		// Remove whitespace from the phrase, convert to a string.
-		let newString = this.activePhrase.toString();
-		newString = newString.split(' ').join('');
-
-		// Split the string and append to the array. Also convert to lower case.
-		for (let i=0; i<newString.length; i++) {
-			this.currentPhrase.push(newString.charAt(i).toLowerCase());
-		}
+ 		let phraseDiv = `<div id="phrase" class="section">
+    	<ul>`;
+		$('#phrase').append(`<p>${phraseDiv}</p>`);
+ 		this.activePhrase = this.getRandomPhrase();
+ 		this.activePhrase.addPhraseToDisplay();
 	};
 
 /* The handle interaction method calls on the checkLetter() method from the Phrase
-class. Once it's checks have been completed, it checks if the user has won
-or lose the game.
+class. If the letter is a match, the letter is highlighted as green on the on-screen
+keyboard, and the letter on the phrase itself is revealed.
+If the letter is not a match, the letter is highlighted as red, disabled, and the 
+user loses a life.
+
+This function also checks if the user has won (or lost) the game each time they click
+or type a letter.
 */ 
 
  	handleInteraction(e) {
- 		this.phrase.checkLetter(e);
+ 		//Check if the letter is a match
+ 		if (this.activePhrase.checkLetter(e)) {
+ 			$(`.key[value="${this.activePhrase.letterGuess}"]`).addClass("chosen").prop('disabled', true);
+					this.activePhrase.showMatchedLetter(e);
+ 		} else {
+ 			$(`.key[value="${this.activePhrase.letterGuess}"]`).addClass("wrong").prop('disabled', true);
+			this.removeLife();
+ 		}
+ 		// Check if the game is won
  		this.checkforWin();
 	}
 
@@ -73,16 +72,14 @@ or lose the game.
 The check for Win method sets this.win to true if the phrase array is
 empty, and the user has not used up all of their lives. If so,
 the this.gameOver() function is called with a value of true, which ends
-the game.
-If the user is out of lives, the same function is called, with a value
+the game. If the user is out of lives, the same function is called, with a value
 of false.
 */
 	checkforWin() {
-		if (this.currentPhrase.length === 0 && this.missed < 5) {
-			this.win = true;
+		const hiddenLetters = $('.hide');
+		if (hiddenLetters.length === 0 && this.missed < 5) {
 			this.gameOver(true);
-			}	else if (this.currentPhrase.length > 0 && this.missed === 5) {
-					this.win = false;
+			}	else if (this.missed === 5) {
 					this.gameOver(false);
 				}
 			}
@@ -134,6 +131,6 @@ replaceContent() functions, which reset the board for the next attempt.
 	$('#scoreboard ol').append(
  		`<li class="tries"><img src="images/liveHeart.png" alt="Heart Icon" height="35" width="30"></li>`
 	 	);
-	} this.reset = true;
+	} 
 	 	} 
 }
